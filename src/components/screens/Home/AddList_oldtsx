@@ -1,0 +1,132 @@
+import React, { FC, useState, MouseEvent } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Popover from "@material-ui/core/Popover";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+import FormGroup from "@material-ui/core/FormGroup";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import { CheckboxSelectElement } from "./Checkbox/CheckboxSelectElement";
+import { ItemBlockInterface } from "./type/ItemBlock.interface";
+import { GroupLayoutsType, LayoutsInterface } from "./type/Layouts.interface";
+
+const useStyles = makeStyles((theme) => ({
+  popup: {
+    padding: theme.spacing(5),
+  },
+}));
+
+interface IAddList {
+  // выбранные элементы
+  items: ItemBlockInterface[];
+  //доступные элементы
+  originalItems: LayoutsInterface[];
+  onAddItem: (group: GroupLayoutsType, itemId: string) => void;
+  onRemoveItem: (itemId: string) => void;
+  disable: boolean;
+}
+
+export const AddList: FC<IAddList> = ({
+  items,
+  onRemoveItem,
+  onAddItem,
+  originalItems,
+  disable = false,
+}) => {
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    // setAnchorEl(event.currentTarget);
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = !!anchorEl;
+  const id = anchorEl ? "simple-popover" : undefined;
+
+  const addAllElement = (group: GroupLayoutsType) => {
+    // получаем наименования из группы
+    const currentSelectedElementData = items
+      .filter((e) => e.group === group)
+      ?.map((k) => k.i);
+    const currentOriginalItemsGroup = originalItems?.find(
+      (e) => e.group === group
+    );
+    if (!currentSelectedElementData || !currentOriginalItemsGroup) return;
+
+    // проверка на выбранные все элементы в группе
+    const isAllSelectedGroup =
+      currentSelectedElementData.length ===
+      currentOriginalItemsGroup?.data?.length;
+
+    const addElementArray = currentOriginalItemsGroup?.data.filter(
+      (item) => !currentSelectedElementData?.includes(item.i)
+    );
+
+    isAllSelectedGroup
+      ? currentSelectedElementData.forEach((elementDelete) =>
+          onRemoveItem(elementDelete)
+        )
+      : addElementArray?.forEach((element) => onAddItem(group, element.i));
+  };
+
+  const handleChange = (
+    checked: boolean,
+    group: GroupLayoutsType,
+    itemId: string
+  ) => {
+    if (checked) {
+      onAddItem(group, itemId);
+    } else {
+      onRemoveItem(itemId);
+    }
+  };
+
+  return (
+    <>
+      <IconButton
+        aria-label="add"
+        disabled={disable}
+        onClick={handleClick}
+        aria-describedby={id}
+      >
+        <AddCircleOutlineIcon />
+      </IconButton>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClick}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <div className={classes.popup}>
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Select Widgets</FormLabel>
+            <FormGroup>
+              {originalItems.map((layouts) => (
+                <div key={layouts.name}>
+                  <CheckboxSelectElement
+                    items={items.filter((i) => i.group === layouts.group)}
+                    addAllElement={addAllElement}
+                    elementLayouts={layouts}
+                    handleChange={handleChange}
+                  />
+                </div>
+              ))}
+            </FormGroup>
+          </FormControl>
+        </div>
+      </Popover>
+    </>
+  );
+};
