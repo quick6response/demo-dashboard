@@ -50,8 +50,12 @@ interface ITopBar {
   items: ItemInterface[];
   onLayoutSave?: () => void;
   onIsEditDashboard: () => void;
+
+  // удаляем методы, тьо будем мспользовать только один, чтобы логику описать в контенте
   onRemoveItem: (itemId: string) => void;
   onAddItem: (group: GroupLayoutsType, itemId: string) => void;
+  // доьаляем метод из контента, который пририсает весь обьект с виджетом 
+  onChangeElementLayout: (widget: LayoutInterface) => void;
   // вкл/выкл редактирование дашборда
 }
 export const TopBar: FC<ITopBar> = ({
