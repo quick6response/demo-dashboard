@@ -1,19 +1,20 @@
 import {
-  Button,
   Divider,
   Drawer,
   IconButton,
   ListItem,
   ListItemText,
-  ListSubheader,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import List from "@mui/material/List";
-import React, { FC, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { CheckboxSelectElement } from "./Checkbox/CheckboxSelectElement";
-import { ItemBlockInterface } from "./type/ItemBlock.interface";
-import { GroupLayoutsType, LayoutsInterface } from "./type/Layouts.interface";
+import React, { FC } from "react";
+import { ItemInterface } from "./interfaces/item.interface";
+import {
+  GroupLayoutsType,
+  LayoutsInterface,
+} from "./interfaces/layouts.interface";
+import { CheckboxSelectElement } from "./List/CheckboxSelectElement";
 
 export const drawerWidth = 310;
 const useStyles = makeStyles((theme) => ({
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 interface IAddList {
   isOpen: boolean;
   // выбранные элементы
-  items: ItemBlockInterface[];
+  items: ItemInterface[];
   //доступные элементы
   originalItems: LayoutsInterface[];
   changeIsOpen: () => void;

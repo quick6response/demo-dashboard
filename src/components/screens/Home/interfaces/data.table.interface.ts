@@ -1,4 +1,4 @@
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef } from "@mui/x-data-grid";
 
 export interface DataTableInterface<T> {
   name: string;

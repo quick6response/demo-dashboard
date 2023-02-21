@@ -1,7 +1,10 @@
 import { faker } from "@faker-js/faker/locale/ru";
 import { Layout } from "react-grid-layout";
-import { ItemBlockInterface } from "../type/ItemBlock.interface";
-import { GroupLayoutsType, LayoutsInterface } from "../type/Layouts.interface";
+import { ItemInterface } from "../interfaces/item.interface";
+import {
+  GroupLayoutsType,
+  LayoutsInterface,
+} from "../interfaces/layouts.interface";
 
 export const sizeMinAndMax = {
   minW: 4, // длинна
@@ -91,7 +94,7 @@ export const initialLayouts: LayoutsInterface[] = [
 ];
 
 function get(key: GroupLayoutsType, count = 20) {
-  const arr: ItemBlockInterface[] = [];
+  const arr: ItemInterface[] = [];
 
   for (let i = 0; i < count; i++) {
     const name = faker.helpers.unique(faker.internet.email, [key]);

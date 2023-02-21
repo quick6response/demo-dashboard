@@ -1,17 +1,16 @@
-import { FC, useCallback, useLayoutEffect, useState } from "react";
+import React, { FC, useLayoutEffect, useState } from "react";
 import ReactGridLayout, {
   Layouts,
   Responsive as ResponsiveGridLayout,
 } from "react-grid-layout";
 import { useAlert } from "../../../hooks/useAlert";
 import { useWindowSize } from "../../../hooks/useWindowSize";
+import { Alert } from "../../Alert/Alert";
 import { drawerWidth } from "./AddList";
 import { initialLayouts } from "./data/initial-layouts.data";
+import { ItemInterface } from "./interfaces/item.interface";
+import { GroupLayoutsType } from "./interfaces/layouts.interface";
 import { TopBar } from "./TopBar";
-import { ItemBlockInterface } from "./type/ItemBlock.interface";
-import { GroupLayoutsType } from "./type/Layouts.interface";
-import { Alert } from "../../Alert/Alert";
-import React from "react";
 import { Widget } from "./Widget";
 
 // доступные элементы для выбора
@@ -25,9 +24,9 @@ export const Content: FC = () => {
   const [layouts, setLayouts] = useState<Layouts>({
     lg: [],
   });
-  const [availableLayouts, setAvailableLayouts] = useState(getLayouts);
+  const [availableLayouts] = useState(getLayouts);
   // выбранные
-  const [items, setItems] = useState<ItemBlockInterface[]>([]);
+  const [items, setItems] = useState<ItemInterface[]>([]);
   // редактирование элементов
   const [isEdit, setIsEdit] = useState(false);
   const [widthGrid, setWidthGrid] = useState(size.width);
@@ -116,27 +115,3 @@ export const Content: FC = () => {
     </>
   );
 };
-
-function getFromLS(key: string) {
-  let ls: Record<string, string> = {};
-  if (global.localStorage) {
-    try {
-      const itemLocalStorage = global?.localStorage?.getItem("rgl-8");
-      if (!itemLocalStorage) return;
-
-      ls = JSON.parse(itemLocalStorage) || {};
-    } catch (e) {}
-  }
-  return ls[key];
-}
-
-function saveToLS(key: string, value: any) {
-  if (global.localStorage) {
-    global.localStorage.setItem(
-      "rgl-8",
-      JSON.stringify({
-        [key]: value,
-      })
-    );
-  }
-}

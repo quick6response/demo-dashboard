@@ -1,26 +1,16 @@
-import { Box, Collapse, ListSubheader } from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import { ExpandLess, ExpandMore, Group, StarBorder } from "@material-ui/icons";
-import List from "@mui/material/List";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import {
-  MoveToInbox as InboxIcon,
-  Drafts as DraftsIcon,
-  Send as SendIcon,
-} from "@mui/icons-material";
-import clsx from "clsx";
-import { FC, useState } from "react";
-import React from "react";
-import Card from "@material-ui/core/Card";
-import { makeStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
+import React, { FC } from "react";
 import { DrawerListAddElement, drawerWidth } from "./AddList";
-import { ItemBlockInterface } from "./type/ItemBlock.interface";
-import { GroupLayoutsType, LayoutsInterface } from "./type/Layouts.interface";
+import { ItemInterface } from "./interfaces/item.interface";
+import {
+  GroupLayoutsType,
+  LayoutsInterface,
+} from "./interfaces/layouts.interface";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -56,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 interface ITopBar {
   isEdit: boolean;
   originalItems: LayoutsInterface[];
-  items: ItemBlockInterface[];
+  items: ItemInterface[];
   onLayoutSave?: () => void;
   onIsEditDashboard: () => void;
   onRemoveItem: (itemId: string) => void;

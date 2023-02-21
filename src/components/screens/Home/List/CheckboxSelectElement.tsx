@@ -1,22 +1,18 @@
-import {
-  Box,
-  Collapse,
-  IconButton,
-  List,
-  ListItemText,
-} from "@material-ui/core";
-import ListItem from "@mui/material/ListItem";
+import { Collapse, IconButton, List, ListItemText } from "@material-ui/core";
 import { Add, Delete, ExpandLess } from "@material-ui/icons";
 import { ExpandMore } from "@mui/icons-material";
+import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import React, { FC, useState } from "react";
-import { ItemBlockInterface } from "../type/ItemBlock.interface";
-import { GroupLayoutsType, LayoutsInterface } from "../type/Layouts.interface";
+import { ItemInterface } from "../interfaces/item.interface";
+import {
+  GroupLayoutsType,
+  LayoutsInterface,
+} from "../interfaces/layouts.interface";
 
 interface ICheckboxSelectElement {
   // выбранные элементы в текущей категории
-  items: ItemBlockInterface[];
+  items: ItemInterface[];
   addAllElement: (group: GroupLayoutsType) => void;
   elementLayouts: LayoutsInterface;
   handleChange: (
@@ -28,35 +24,13 @@ interface ICheckboxSelectElement {
 export const CheckboxSelectElement: FC<ICheckboxSelectElement> = ({
   items,
   elementLayouts,
-  addAllElement,
   handleChange,
 }) => {
-  // выбранные элементы
-  // const [selectItem, setSelectItem] = useState<string[]>(items.map((i) => i.i));
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  // const isAllSelect = selectItem.length === elementLayouts.data.length;
-  // const addAllElementSelect = () => {
-  //   const addElementArray = elementLayouts?.data
-  //     .filter((item) => !selectItem.includes(item.i))
-  //     .map((element) => element.i);
-  //   setSelectItem((prevState) => [...prevState, ...addElementArray]);
-  //   addAllElement(elementLayouts.group);
-  // };
-  // const removeAllElementSelect = () => {
-  //   setSelectItem((prevState) => {
-  //     prevState.forEach((k) => handleChange(false, elementLayouts?.group, k));
-  //     return [];
-  //   });
-  // };
+
   const addElementSelect = (itemId: string) => {
     // проверка на добавленный элемент
     const isCheck = !Boolean(items.find((t) => t.i === itemId));
-    // console.log(isCheck);
-    // if (isCheck) {
-    //   setSelectItem((prevState) => [...prevState, itemId]);
-    // } else {
-    //   setSelectItem((prev) => prev.filter((i) => i !== itemId));
-    // }
     handleChange(isCheck, elementLayouts?.group, itemId);
   };
 

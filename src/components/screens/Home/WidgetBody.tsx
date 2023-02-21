@@ -1,14 +1,15 @@
 /**
  * Выбираем и отрисовываем элемент для виджета по условию
- */ import { Button } from "@material-ui/core";
+ */
+import { Button } from "@material-ui/core";
 import React, { FC } from "react";
-import { Layout, Layouts } from "react-grid-layout";
+import { Layout } from "react-grid-layout";
 import { booksUsersData } from "./data/books-users.data";
+import { ItemInterface } from "./interfaces/item.interface";
 import { Table } from "./Table/Table";
-import { ItemBlockInterface } from "./type/ItemBlock.interface";
 
 interface ISelectItemWidget {
-  item: ItemBlockInterface;
+  item: ItemInterface;
   layout?: Layout;
 }
 export const WidgetBody: FC<ISelectItemWidget> = ({ item, layout }) => {
