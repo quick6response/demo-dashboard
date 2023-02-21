@@ -6,7 +6,7 @@ import ReactGridLayout, {
 import { useAlert } from "../../../hooks/useAlert";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { Alert } from "../../Alert/Alert";
-import { initialLayouts } from "./data/initial-layouts.data";
+import { initialLayoutsTable } from "./data/initial-layouts.data";
 import { initialLayoutsExpandedData } from "./data/initial-layouts.expanded.data";
 import { drawerWidth } from "./Drawer/DrawerListItemsDefault";
 import { ItemInterface } from "./interfaces/item.interface";
@@ -48,7 +48,7 @@ export const Content: FC = () => {
   };
   const onAddItem = (group: GroupLayoutsType, itemId: string) => {
     // ищем виджет в группе
-    const findLayoutInGroup = initialLayouts
+    const findLayoutInGroup = initialLayoutsTable
       // ищем группу
       .find((lay) => lay.group === group)
       // если группа есть, ищем виджет по айди

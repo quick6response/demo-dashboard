@@ -1,20 +1,23 @@
 import { FullListLayoutsInterface } from "../interfaces/layouts.interface";
-import { initialLayouts } from "./initial-layouts.data";
+import {
+  initialLayoutsLinks,
+  initialLayoutsTable,
+} from "./initial-layouts.data";
 
 export const initialLayoutsExpandedData: FullListLayoutsInterface[] = [
   {
     name: "Таблицы",
     type: "table",
-    data: initialLayouts[0],
+    data: initialLayoutsTable,
   },
   {
     name: "Ссылки",
     type: "links",
-    data: initialLayouts[1],
+    data: initialLayoutsLinks,
   },
-  // {
-  //   name: "Графики",
-  //   type: "links",
-  //   data: {},
-  // },
+  {
+    name: "Графики",
+    type: "links",
+    data: [],
+  },
 ];

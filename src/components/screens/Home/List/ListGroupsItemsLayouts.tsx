@@ -38,12 +38,14 @@ export const ListGroupsItemsLayouts: FC<IListItemsLayouts> = ({
 
       <Collapse in={isOpen} timeout="auto" unmountOnExit>
         <List style={{ marginLeft: 7 }}>
-          <ListItemsLayouts
-            key={elementLayouts.name}
-            items={items.filter((i) => i.group === elementLayouts.data.group)}
-            elementLayouts={elementLayouts?.data}
-            handleChange={handleChange}
-          />
+          {elementLayouts.data.map((el) => (
+            <ListItemsLayouts
+              key={elementLayouts.name}
+              items={items.filter((i) => i.type === elementLayouts.type)}
+              elementLayouts={el}
+              handleChange={handleChange}
+            />
+          ))}
         </List>
       </Collapse>
     </>

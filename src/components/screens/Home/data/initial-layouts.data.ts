@@ -4,6 +4,7 @@ import { ItemInterface } from "../interfaces/item.interface";
 import {
   GroupLayoutsType,
   LayoutsInterface,
+  TypeListLayoutsType,
 } from "../interfaces/layouts.interface";
 
 export const sizeMinAndMax = {
@@ -21,7 +22,7 @@ const sizeMinAndMaxBooks: Omit<Layout, "x" | "y" | "i"> = {
   minW: 7,
 };
 
-export const initialLayouts: LayoutsInterface[] = [
+export const initialLayoutsTable: LayoutsInterface[] = [
   {
     name: "Справочники",
     group: "books",
@@ -32,6 +33,7 @@ export const initialLayouts: LayoutsInterface[] = [
         y: 0,
         path: "books/get/users",
         group: "books",
+        type: "table",
         ...sizeMinAndMaxBooks,
       },
       {
@@ -40,6 +42,7 @@ export const initialLayouts: LayoutsInterface[] = [
         y: 0,
         group: "books",
         path: "books/get/books",
+        type: "table",
         ...sizeMinAndMaxBooks,
       },
       {
@@ -48,6 +51,7 @@ export const initialLayouts: LayoutsInterface[] = [
         y: 3,
         group: "books",
         path: "books/get/phone",
+        type: "table",
         ...sizeMinAndMaxBooks,
       },
     ],
@@ -64,6 +68,7 @@ export const initialLayouts: LayoutsInterface[] = [
         h: 3,
         group: "list",
         path: "list/get/траты",
+        type: "table",
         ...sizeMinAndMax,
       },
       {
@@ -74,6 +79,7 @@ export const initialLayouts: LayoutsInterface[] = [
         h: 3,
         group: "list",
         path: "list/get/zp",
+        type: "table",
         ...sizeMinAndMax,
       },
       {
@@ -83,6 +89,7 @@ export const initialLayouts: LayoutsInterface[] = [
         w: 5,
         h: 3,
         group: "list",
+        type: "table",
         path: "list/get/clients",
 
         ...sizeMinAndMax,
@@ -91,7 +98,82 @@ export const initialLayouts: LayoutsInterface[] = [
   },
 ];
 
-function get(key: GroupLayoutsType, count = 20) {
+export const initialLayoutsLinks: LayoutsInterface[] = [
+  {
+    name: "Справочники",
+    group: "books",
+    data: [
+      {
+        i: "Пользователи",
+        x: 0,
+        y: 0,
+        path: "books/get/users",
+        group: "books",
+        type: "links",
+        ...sizeMinAndMaxBooks,
+      },
+      {
+        i: "Книги",
+        x: 5,
+        y: 0,
+        group: "books",
+        path: "books/get/books",
+        type: "links",
+        ...sizeMinAndMaxBooks,
+      },
+      {
+        i: "Телефоны",
+        x: 0,
+        y: 3,
+        group: "books",
+        path: "books/get/phone",
+        type: "links",
+        ...sizeMinAndMaxBooks,
+      },
+    ],
+  },
+  {
+    name: "Документы",
+    group: "list",
+    data: [
+      {
+        i: "Расходы",
+        x: 0,
+        y: 0,
+        w: 5,
+        h: 3,
+        group: "list",
+        path: "list/get/траты",
+        type: "links",
+        ...sizeMinAndMax,
+      },
+      {
+        i: "Зарплата",
+        x: 5,
+        y: 0,
+        w: 5,
+        h: 3,
+        group: "list",
+        path: "list/get/zp",
+        type: "links",
+        ...sizeMinAndMax,
+      },
+      {
+        i: "Клиенты",
+        x: 0,
+        y: 3,
+        w: 5,
+        h: 3,
+        group: "list",
+        type: "links",
+        path: "list/get/clients",
+
+        ...sizeMinAndMax,
+      },
+    ],
+  },
+];
+function get(key: GroupLayoutsType, type: TypeListLayoutsType, count = 20) {
   const arr: ItemInterface[] = [];
 
   for (let i = 0; i < count; i++) {
@@ -101,6 +183,7 @@ function get(key: GroupLayoutsType, count = 20) {
       i: name,
       path: name,
       group: key,
+      type,
       x: 0,
       y: 3,
       w: 5,

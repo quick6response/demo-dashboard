@@ -1,6 +1,7 @@
 import { ItemInterface } from "./item.interface";
 
 export type GroupLayoutsType = "books" | "list";
+export type TypeListLayoutsType = "table" | "links" | "charts";
 
 export interface LayoutsInterface {
   // Группа виджета 'Справочники' и т.д. Нужен отдельный тип для этого
@@ -15,6 +16,6 @@ export interface LayoutsInterface {
  */
 export interface FullListLayoutsInterface {
   name: string;
-  type: "table" | "links" | "charts";
-  data: LayoutsInterface;
+  type: TypeListLayoutsType;
+  data: LayoutsInterface[];
 }

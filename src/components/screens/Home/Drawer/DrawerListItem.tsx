@@ -115,7 +115,7 @@ export const DrawerListAddElement: FC<IAddList> = ({
             <div style={{ marginLeft: 7 }}>
               <ListGroupsItemsLayouts
                 key={layouts.name}
-                items={items.filter((i) => i.group === layouts.data.group)}
+                items={items.filter((i) => i.type === layouts.type)}
                 elementLayouts={layouts}
                 handleChange={handleChange}
               />
