@@ -5,14 +5,12 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
 import React, { FC } from "react";
-import {
-  DrawerListAddElement,
-  drawerWidth,
-} from "./Drawer/DrawerListItemsDefault";
+import { DrawerListAddElement } from "./Drawer/DrawerListItem";
+import { drawerWidth } from "./Drawer/DrawerListItemsDefault";
 import { ItemInterface } from "./interfaces/item.interface";
 import {
+  FullListLayoutsInterface,
   GroupLayoutsType,
-  LayoutsInterface,
 } from "./interfaces/layouts.interface";
 
 const useStyles = makeStyles((theme) => ({
@@ -48,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface ITopBar {
   isEdit: boolean;
-  originalItems: LayoutsInterface[];
+  originalItems: FullListLayoutsInterface[];
   items: ItemInterface[];
   onLayoutSave?: () => void;
   onIsEditDashboard: () => void;
@@ -69,11 +67,6 @@ export const TopBar: FC<ITopBar> = ({
 
   return (
     <>
-      {/*<div*/}
-      {/*  className={clsx(classes.content, {*/}
-      {/*    [classes.contentShift]: isEdit,*/}
-      {/*  })}*/}
-      {/*>*/}
       <Card className={classes.root}>
         <FormControlLabel
           control={
@@ -98,7 +91,6 @@ export const TopBar: FC<ITopBar> = ({
         isOpen={isEdit}
         changeIsOpen={onIsEditDashboard}
       />
-      {/*</div>*/}
     </>
   );
 };
