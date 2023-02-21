@@ -5,7 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import CloseIcon from "@material-ui/icons/Close";
 import React, { FC, memo } from "react";
 import { Layout } from "react-grid-layout";
-import { ItemInterface } from "./interfaces/item.interface";
+import { ItemInterface } from "../interfaces/item.interface";
 import { WidgetBody } from "./WidgetBody";
 
 const useStyles = makeStyles({
@@ -38,6 +38,10 @@ interface IWidget {
   // блокировка кнопок при выкл редактирование.
   isEdit: boolean;
 }
+
+/**
+ * Родитель виджета, в нем отписано имя и свойства
+ */
 export const Widget: FC<IWidget> = memo(
   ({ item, onRemoveItem, layout, isEdit = false }) => {
     const classes = useStyles();

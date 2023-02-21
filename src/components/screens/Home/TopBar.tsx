@@ -5,7 +5,10 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
 import React, { FC } from "react";
-import { DrawerListAddElement, drawerWidth } from "./AddList";
+import {
+  DrawerListAddElement,
+  drawerWidth,
+} from "./Drawer/DrawerListItemsDefault";
 import { ItemInterface } from "./interfaces/item.interface";
 import {
   GroupLayoutsType,

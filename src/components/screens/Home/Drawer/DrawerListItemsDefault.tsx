@@ -9,12 +9,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import List from "@mui/material/List";
 import React, { FC } from "react";
-import { ItemInterface } from "./interfaces/item.interface";
+import { ItemInterface } from "../interfaces/item.interface";
 import {
   GroupLayoutsType,
   LayoutsInterface,
-} from "./interfaces/layouts.interface";
-import { CheckboxSelectElement } from "./List/CheckboxSelectElement";
+} from "../interfaces/layouts.interface";
+import { CheckboxSelectElement } from "../List/CheckboxSelectElement";
 
 export const drawerWidth = 310;
 const useStyles = makeStyles((theme) => ({

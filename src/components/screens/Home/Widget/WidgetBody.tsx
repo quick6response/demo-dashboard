@@ -1,17 +1,18 @@
-/**
- * Выбираем и отрисовываем элемент для виджета по условию
- */
 import { Button } from "@material-ui/core";
 import React, { FC } from "react";
 import { Layout } from "react-grid-layout";
-import { booksUsersData } from "./data/books-users.data";
-import { ItemInterface } from "./interfaces/item.interface";
-import { Table } from "./Table/Table";
+import { booksUsersData } from "../data/books-users.data";
+import { ItemInterface } from "../interfaces/item.interface";
+import { Table } from "../Table/Table";
 
 interface ISelectItemWidget {
   item: ItemInterface;
   layout?: Layout;
 }
+
+/**
+ * Отрисовка виджета в зависимости от типа
+ */
 export const WidgetBody: FC<ISelectItemWidget> = ({ item, layout }) => {
   if (item.group === "books") {
     // эмуляция запроса на выборку данные для таблицы
