@@ -7,6 +7,7 @@ import { useAlert } from "../../../hooks/useAlert";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { Alert } from "../../Alert/Alert";
 import { initialLayouts } from "./data/initial-layouts.data";
+import { initialLayoutsExpandedData } from "./data/initial-layouts.expanded.data";
 import { drawerWidth } from "./Drawer/DrawerListItemsDefault";
 import { ItemInterface } from "./interfaces/item.interface";
 import { GroupLayoutsType } from "./interfaces/layouts.interface";
@@ -14,7 +15,7 @@ import { TopBar } from "./TopBar";
 import { Widget } from "./Widget/Widget";
 
 // доступные элементы для выбора
-const getLayouts = [...initialLayouts];
+const getLayouts = [...initialLayoutsExpandedData];
 
 // развернуть двумерный массив
 // initialLayouts.map((lay) => lay.data).flat(),
