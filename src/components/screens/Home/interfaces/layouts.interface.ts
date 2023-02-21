@@ -13,7 +13,7 @@ export interface LayoutsInterface {
 /**
  * Используется для описания ответа от сервера с группами и данными
  */
-interface FullListLayoutsInterface {
+export interface FullListLayoutsInterface {
   name: string;
   type: "table" | "links" | "charts";
   data: LayoutsInterface;

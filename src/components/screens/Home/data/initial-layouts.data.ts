@@ -50,7 +50,6 @@ export const initialLayouts: LayoutsInterface[] = [
         path: "books/get/phone",
         ...sizeMinAndMaxBooks,
       },
-      ...get("books"),
     ],
   },
   {
@@ -88,7 +87,6 @@ export const initialLayouts: LayoutsInterface[] = [
 
         ...sizeMinAndMax,
       },
-      ...get("list"),
     ],
   },
 ];
