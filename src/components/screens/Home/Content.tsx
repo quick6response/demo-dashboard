@@ -36,16 +36,19 @@ export const Content: FC = () => {
   useLayoutEffect(() => {
     setWidthGrid(isEdit ? size.width - drawerWidth : size.width);
   }, [isEdit, size.width]);
+
   const onLayoutChange = (
     currentLayout: ReactGridLayout.Layout[],
     allLayouts: ReactGridLayout.Layouts
   ) => {
     setLayouts(allLayouts);
   };
+
   const onRemoveItem = (itemId: string) => {
     setItems((prev) => prev.filter((i) => i.i !== itemId));
     setAlert(<Alert status="info">{itemId} удален!</Alert>);
   };
+
   const onAddItem = (group: GroupLayoutsType, itemId: string) => {
     // ищем виджет в группе
     const findLayoutInGroup = initialLayoutsTable
@@ -64,6 +67,15 @@ export const Content: FC = () => {
     setAlert(<Alert status={"info"}>{itemId} добавлен на доску!</Alert>);
   };
 
+  const addElrment = (element: LayoutInterface) => {
+  // проверка на уже доьавоенный элемент верез find
+
+  // если добавлен, то вызываем удаление
+
+  // добавляем в массив текущих виджетов переданный виджет с параметами group, type 
+
+
+  }
   const onIsEditDashboard = () => {
     setIsEdit((prev) => !prev);
   };
