@@ -13,7 +13,6 @@ import {
 interface IListItemsLayouts {
   // выбранные элементы в текущей категории
   items: ItemInterface[];
-  addAllElement: (group: GroupLayoutsType) => void;
   elementLayouts: LayoutsInterface;
   handleChange: (
     checked: boolean,
