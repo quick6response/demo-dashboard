@@ -16,10 +16,10 @@ export const sizeMinAndMax = {
 
 const sizeMinAndMaxBooks: Omit<Layout, "x" | "y" | "i"> = {
   ...sizeMinAndMax,
-  w: 7,
-  h: 8,
-  minH: 8,
   minW: 7,
+  w: 8,
+  minH: 8,
+  h: 9,
 };
 
 export const initialLayoutsTable: LayoutsInterface[] = [
@@ -102,75 +102,12 @@ export const initialLayoutsLinks: LayoutsInterface[] = [
   {
     name: "Справочники",
     group: "books",
-    data: [
-      {
-        i: "Пользователи",
-        x: 0,
-        y: 0,
-        path: "books/get/users",
-        group: "books",
-        type: "links",
-        ...sizeMinAndMaxBooks,
-      },
-      {
-        i: "Книги",
-        x: 5,
-        y: 0,
-        group: "books",
-        path: "books/get/books",
-        type: "links",
-        ...sizeMinAndMaxBooks,
-      },
-      {
-        i: "Телефоны",
-        x: 0,
-        y: 3,
-        group: "books",
-        path: "books/get/phone",
-        type: "links",
-        ...sizeMinAndMaxBooks,
-      },
-    ],
+    data: get("books", "links"),
   },
   {
     name: "Документы",
     group: "list",
-    data: [
-      {
-        i: "Расходы",
-        x: 0,
-        y: 0,
-        w: 5,
-        h: 3,
-        group: "list",
-        path: "list/get/траты",
-        type: "links",
-        ...sizeMinAndMax,
-      },
-      {
-        i: "Зарплата",
-        x: 5,
-        y: 0,
-        w: 5,
-        h: 3,
-        group: "list",
-        path: "list/get/zp",
-        type: "links",
-        ...sizeMinAndMax,
-      },
-      {
-        i: "Клиенты",
-        x: 0,
-        y: 3,
-        w: 5,
-        h: 3,
-        group: "list",
-        type: "links",
-        path: "list/get/clients",
-
-        ...sizeMinAndMax,
-      },
-    ],
+    data: get("list", "links"),
   },
 ];
 function get(key: GroupLayoutsType, type: TypeListLayoutsType, count = 20) {

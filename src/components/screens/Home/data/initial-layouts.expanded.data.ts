@@ -17,7 +17,7 @@ export const initialLayoutsExpandedData: FullListLayoutsInterface[] = [
   },
   {
     name: "Графики",
-    type: "links",
+    type: "charts",
     data: [],
   },
 ];
