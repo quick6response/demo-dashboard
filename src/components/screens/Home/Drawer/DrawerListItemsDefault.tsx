@@ -58,7 +58,7 @@ interface IAddList {
   onRemoveItem: (itemId: string) => void;
 }
 
-export const DrawerListAddElement: FC<IAddList> = ({
+export const DrawerListAddElementDefault: FC<IAddList> = ({
   items,
   onRemoveItem,
   onAddItem,
@@ -67,31 +67,6 @@ export const DrawerListAddElement: FC<IAddList> = ({
   changeIsOpen,
 }) => {
   const classes = useStyles();
-  const addAllElement = (group: GroupLayoutsType) => {
-    // получаем наименования виджеты переданной группы
-    const currentSelectedElementData = items
-      .filter((e) => e.group === group)
-      ?.map((k) => k.i);
-    const currentOriginalItemsGroup = originalItems?.find(
-      (e) => e.group === group
-    );
-    if (!currentSelectedElementData || !currentOriginalItemsGroup) return;
-
-    // проверка на выбранные все элементы в группе
-    const isAllSelectedGroup =
-      currentSelectedElementData.length ===
-      currentOriginalItemsGroup?.data?.length;
-
-    const addElementArray = currentOriginalItemsGroup?.data.filter(
-      (item) => !currentSelectedElementData?.includes(item.i)
-    );
-
-    isAllSelectedGroup
-      ? currentSelectedElementData.forEach((elementDelete) =>
-          onRemoveItem(elementDelete)
-        )
-      : addElementArray?.forEach((element) => onAddItem(group, element.i));
-  };
 
   /**
    * Добавить/удалить элемент
@@ -138,7 +113,6 @@ export const DrawerListAddElement: FC<IAddList> = ({
             <ListItemsLayouts
               key={layouts.name}
               items={items.filter((i) => i.group === layouts.group)}
-              addAllElement={addAllElement}
               elementLayouts={layouts}
               handleChange={handleChange}
             />
