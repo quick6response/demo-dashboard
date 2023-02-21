@@ -1,15 +1,11 @@
 import { Snackbar } from '@material-ui/core';
 import { Alert as AlertMUI } from '@material-ui/lab';
 import { Color } from '@material-ui/lab/Alert/Alert';
-import React from 'react';
+import React, {FC, PropsWithChildren} from 'react';
 import { useAlert } from '../../hooks/useAlert';
-export function Alert({
-  children,
-  status = 'success',
-}: {
-  children: React.ReactNode;
-  status: Color;
-}) {
+
+
+export const Alert: FC<PropsWithChildren<{ status: Color }>> = ({status, children}) => {
   const { setAlert } = useAlert();
   return (
     <Snackbar
@@ -21,5 +17,6 @@ export function Alert({
         {children}
       </AlertMUI>
     </Snackbar>
-  );
-}
+  )
+};
+
