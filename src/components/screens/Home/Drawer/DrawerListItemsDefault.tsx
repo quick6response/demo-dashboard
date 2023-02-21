@@ -14,7 +14,7 @@ import {
   GroupLayoutsType,
   LayoutsInterface,
 } from "../interfaces/layouts.interface";
-import { CheckboxSelectElement } from "../List/CheckboxSelectElement";
+import { ListItemsLayouts } from "../List/ListItemsLayouts";
 
 export const drawerWidth = 310;
 const useStyles = makeStyles((theme) => ({
@@ -135,7 +135,7 @@ export const DrawerListAddElement: FC<IAddList> = ({
             <ListItemText inset primary="Доступные виджеты" />
           </ListItem>
           {originalItems.map((layouts) => (
-            <CheckboxSelectElement
+            <ListItemsLayouts
               key={layouts.name}
               items={items.filter((i) => i.group === layouts.group)}
               addAllElement={addAllElement}

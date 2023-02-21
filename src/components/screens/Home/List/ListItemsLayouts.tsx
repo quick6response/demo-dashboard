@@ -10,7 +10,7 @@ import {
   LayoutsInterface,
 } from "../interfaces/layouts.interface";
 
-interface ICheckboxSelectElement {
+interface IListItemsLayouts {
   // выбранные элементы в текущей категории
   items: ItemInterface[];
   addAllElement: (group: GroupLayoutsType) => void;
@@ -21,7 +21,8 @@ interface ICheckboxSelectElement {
     itemId: string
   ) => void;
 }
-export const CheckboxSelectElement: FC<ICheckboxSelectElement> = ({
+
+export const ListItemsLayouts: FC<IListItemsLayouts> = ({
   items,
   elementLayouts,
   handleChange,
