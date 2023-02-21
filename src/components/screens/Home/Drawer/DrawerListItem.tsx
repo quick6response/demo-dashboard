@@ -10,10 +10,7 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import List from "@mui/material/List";
 import React, { FC } from "react";
 import { ItemInterface } from "../interfaces/item.interface";
-import {
-  FullListLayoutsInterface,
-  GroupLayoutsType,
-} from "../interfaces/layouts.interface";
+import { FullListLayoutsInterface } from "../interfaces/layouts.interface";
 import { ListGroupsItemsLayouts } from "../List/ListGroupsItemsLayouts";
 
 export const drawerWidth = 310;
@@ -53,41 +50,24 @@ interface IAddList {
   items: ItemInterface[];
   //доступные элементы
   originalItems: FullListLayoutsInterface[];
-
   changeIsOpen: () => void;
-  onAddItem: (group: GroupLayoutsType, itemId: string) => void;
-  onRemoveItem: (itemId: string) => void;
+  onChangeElementLayout: (widget: ItemInterface) => void;
 }
 
-export const DrawerListAddElement: FC<IAddList> = ({
+export const DrawerListItem: FC<IAddList> = ({
   items,
-  onRemoveItem,
-  onAddItem,
   originalItems,
   isOpen,
   changeIsOpen,
+  onChangeElementLayout,
 }) => {
   const classes = useStyles();
-
-  /**
-   * Добавить/удалить элемент
-   * @param checked Выбран ли этот элемент
-   * @param group
-   * @param itemId
-   */
-  const handleChange = (
-    checked: boolean,
-    group: GroupLayoutsType,
-    itemId: string
-  ) => {
-    if (checked) onAddItem(group, itemId);
-    else onRemoveItem(itemId);
-  };
 
   return (
     <>
       <Drawer
         className={classes.drawer}
+        key={"DrawerList"}
         variant="persistent"
         anchor="right"
         open={isOpen}
@@ -114,10 +94,10 @@ export const DrawerListAddElement: FC<IAddList> = ({
           {originalItems.map((layouts) => (
             <div style={{ marginLeft: 7 }}>
               <ListGroupsItemsLayouts
-                key={layouts.name}
+                key={layouts.type}
                 items={items.filter((i) => i.type === layouts.type)}
                 elementLayouts={layouts}
-                handleChange={handleChange}
+                onChangeElementLayout={onChangeElementLayout}
               />
             </div>
           ))}

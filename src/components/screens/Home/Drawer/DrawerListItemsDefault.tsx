@@ -1,20 +1,9 @@
-import {
-  Divider,
-  Drawer,
-  IconButton,
-  ListItem,
-  ListItemText,
-} from "@material-ui/core";
+import { Divider, Drawer, IconButton } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import List from "@mui/material/List";
 import React, { FC } from "react";
 import { ItemInterface } from "../interfaces/item.interface";
-import {
-  GroupLayoutsType,
-  LayoutsInterface,
-} from "../interfaces/layouts.interface";
-import { ListItemsLayouts } from "../List/ListItemsLayouts";
+import { LayoutsInterface } from "../interfaces/layouts.interface";
 
 export const drawerWidth = 310;
 const useStyles = makeStyles((theme) => ({
@@ -54,34 +43,17 @@ interface IAddList {
   //доступные элементы
   originalItems: LayoutsInterface[];
   changeIsOpen: () => void;
-  onAddItem: (group: GroupLayoutsType, itemId: string) => void;
-  onRemoveItem: (itemId: string) => void;
+  onChangeElementLayout: (widget: ItemInterface) => void;
 }
 
 export const DrawerListAddElementDefault: FC<IAddList> = ({
   items,
-  onRemoveItem,
-  onAddItem,
   originalItems,
   isOpen,
   changeIsOpen,
+  onChangeElementLayout,
 }) => {
   const classes = useStyles();
-
-  /**
-   * Добавить/удалить элемент
-   * @param checked Выбран ли этот элемент
-   * @param group
-   * @param itemId
-   */
-  const handleChange = (
-    checked: boolean,
-    group: GroupLayoutsType,
-    itemId: string
-  ) => {
-    if (checked) onAddItem(group, itemId);
-    else onRemoveItem(itemId);
-  };
 
   return (
     <>
@@ -100,7 +72,8 @@ export const DrawerListAddElementDefault: FC<IAddList> = ({
           </IconButton>
         </div>
         <Divider />
-        <List className={classes.list}>
+        <div>Устарело</div>
+        {/*<List className={classes.list}>
           <ListItem
             key="menuHeading"
             divider
@@ -112,12 +85,13 @@ export const DrawerListAddElementDefault: FC<IAddList> = ({
           {originalItems.map((layouts) => (
             <ListItemsLayouts
               key={layouts.name}
+              type="table"
               items={items.filter((i) => i.group === layouts.group)}
               elementLayouts={layouts}
-              handleChange={handleChange}
+              handleChange={onChangeElementLayout}
             />
           ))}
-        </List>
+        </List>*/}
       </Drawer>
     </>
   );

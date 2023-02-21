@@ -6,11 +6,9 @@ import ReactGridLayout, {
 import { useAlert } from "../../../hooks/useAlert";
 import { useWindowSize } from "../../../hooks/useWindowSize";
 import { Alert } from "../../Alert/Alert";
-import { initialLayoutsTable } from "./data/initial-layouts.data";
 import { initialLayoutsExpandedData } from "./data/initial-layouts.expanded.data";
 import { drawerWidth } from "./Drawer/DrawerListItemsDefault";
 import { ItemInterface } from "./interfaces/item.interface";
-import { GroupLayoutsType } from "./interfaces/layouts.interface";
 import { TopBar } from "./TopBar";
 import { Widget } from "./Widget/Widget";
 
@@ -49,33 +47,21 @@ export const Content: FC = () => {
     setAlert(<Alert status="info">{itemId} удален!</Alert>);
   };
 
-  const onAddItem = (group: GroupLayoutsType, itemId: string) => {
-    // ищем виджет в группе
-    const findLayoutInGroup = initialLayoutsTable
-      // ищем группу
-      .find((lay) => lay.group === group)
-      // если группа есть, ищем виджет по айди
-      ?.data.find((layout) => layout.i === itemId);
-    if (!findLayoutInGroup)
-      return setAlert(
-        <Alert status={"error"}>
-          {itemId} не найден в списке, перезагрузите страницу и попробуйте
-          снова!
-        </Alert>
-      );
-    setItems((prev) => [...prev, findLayoutInGroup]);
-    setAlert(<Alert status={"info"}>{itemId} добавлен на доску!</Alert>);
+  const addElement = (element: ItemInterface) => {
+    // проверка на уже добавленный элемент через find
+    const checkElementIsDashboard = items.find(
+      (item) => item.i === element.i && item.path === element.path
+    );
+    if (checkElementIsDashboard) {
+      // console.log(checkElementIsDashboard);
+      return onRemoveItem(checkElementIsDashboard.i);
+    }
+    // если добавлен, то вызываем удаление
+    setItems((prev) => [...prev, element]);
+    setAlert(<Alert status={"info"}>{element.i} добавлен на доску!</Alert>);
+    // добавляем в массив текущих виджетов переданный виджет с параметрами group, type
   };
 
-  const addElrment = (element: LayoutInterface) => {
-  // проверка на уже доьавоенный элемент верез find
-
-  // если добавлен, то вызываем удаление
-
-  // добавляем в массив текущих виджетов переданный виджет с параметами group, type 
-
-
-  }
   const onIsEditDashboard = () => {
     setIsEdit((prev) => !prev);
   };
@@ -84,8 +70,7 @@ export const Content: FC = () => {
     <>
       <TopBar
         items={items}
-        onRemoveItem={onRemoveItem}
-        onAddItem={onAddItem}
+        onChangeElementLayout={addElement}
         onIsEditDashboard={onIsEditDashboard}
         originalItems={availableLayouts}
         isEdit={isEdit}
@@ -108,14 +93,14 @@ export const Content: FC = () => {
             className="widget"
             data-grid={{
               ...item,
-              w: item.w,
-              h: item.h,
+              // w: item.w,
+              // h: item.h,
               x: 0,
               y: index * 2,
             }}
           >
             <Widget
-              layout={layouts?.lg?.find((lay) => lay.i === item.i)}
+              layout={item /*layouts?.lg?.find((lay) => lay.i === item.i)*/}
               item={item}
               isEdit={!isEdit}
               onRemoveItem={onRemoveItem}

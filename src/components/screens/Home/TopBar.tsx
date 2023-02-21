@@ -5,13 +5,10 @@ import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import SaveIcon from "@material-ui/icons/Save";
 import React, { FC } from "react";
-import { DrawerListAddElement } from "./Drawer/DrawerListItem";
+import { DrawerListItem } from "./Drawer/DrawerListItem";
 import { drawerWidth } from "./Drawer/DrawerListItemsDefault";
 import { ItemInterface } from "./interfaces/item.interface";
-import {
-  FullListLayoutsInterface,
-  GroupLayoutsType,
-} from "./interfaces/layouts.interface";
+import { FullListLayoutsInterface } from "./interfaces/layouts.interface";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,19 +49,18 @@ interface ITopBar {
   onIsEditDashboard: () => void;
 
   // удаляем методы, тьо будем мспользовать только один, чтобы логику описать в контенте
-  onRemoveItem: (itemId: string) => void;
-  onAddItem: (group: GroupLayoutsType, itemId: string) => void;
-  // доьаляем метод из контента, который пририсает весь обьект с виджетом 
-  onChangeElementLayout: (widget: LayoutInterface) => void;
+  // onRemoveItem: (itemId: string) => void;
+  // onAddItem: (group: GroupLayoutsType, itemId: string) => void;
+  // доьаляем метод из контента, который пририсает весь обьект с виджетом
+  onChangeElementLayout: (widget: ItemInterface) => void;
   // вкл/выкл редактирование дашборда
 }
 export const TopBar: FC<ITopBar> = ({
   onLayoutSave,
   items,
-  onRemoveItem,
-  onAddItem,
   originalItems,
   onIsEditDashboard,
+  onChangeElementLayout,
   isEdit = false,
 }) => {
   const classes = useStyles();
@@ -87,13 +83,12 @@ export const TopBar: FC<ITopBar> = ({
           <SaveIcon />
         </IconButton>
       </Card>
-      <DrawerListAddElement
+      <DrawerListItem
         items={items}
-        onRemoveItem={onRemoveItem}
-        onAddItem={onAddItem}
         originalItems={originalItems}
         isOpen={isEdit}
         changeIsOpen={onIsEditDashboard}
+        onChangeElementLayout={onChangeElementLayout}
       />
     </>
   );

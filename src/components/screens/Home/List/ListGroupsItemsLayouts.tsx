@@ -4,10 +4,7 @@ import { ExpandMore } from "@mui/icons-material";
 import ListItemButton from "@mui/material/ListItemButton";
 import React, { FC, useState } from "react";
 import { ItemInterface } from "../interfaces/item.interface";
-import {
-  FullListLayoutsInterface,
-  GroupLayoutsType,
-} from "../interfaces/layouts.interface";
+import { FullListLayoutsInterface } from "../interfaces/layouts.interface";
 import { ListItemsLayouts } from "./ListItemsLayouts";
 
 interface IListItemsLayouts {
@@ -15,17 +12,13 @@ interface IListItemsLayouts {
   items: ItemInterface[];
   // объект с категорией
   elementLayouts: FullListLayoutsInterface;
-  handleChange: (
-    checked: boolean,
-    group: GroupLayoutsType,
-    itemId: string
-  ) => void;
+  onChangeElementLayout: (widget: ItemInterface) => void;
 }
 
 export const ListGroupsItemsLayouts: FC<IListItemsLayouts> = ({
   items,
   elementLayouts,
-  handleChange,
+  onChangeElementLayout,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
@@ -40,10 +33,11 @@ export const ListGroupsItemsLayouts: FC<IListItemsLayouts> = ({
         <List style={{ marginLeft: 7 }}>
           {elementLayouts.data.map((el) => (
             <ListItemsLayouts
-              key={elementLayouts.name}
+              key={el.name}
               items={items.filter((i) => i.type === elementLayouts.type)}
               elementLayouts={el}
-              handleChange={handleChange}
+              type={elementLayouts.type}
+              onChangeElementLayout={onChangeElementLayout}
             />
           ))}
         </List>

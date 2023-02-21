@@ -6,33 +6,24 @@ import ListItemButton from "@mui/material/ListItemButton";
 import React, { FC, useState } from "react";
 import { ItemInterface } from "../interfaces/item.interface";
 import {
-  GroupLayoutsType,
   LayoutsInterface,
+  TypeListLayoutsType,
 } from "../interfaces/layouts.interface";
 
 interface IListItemsLayouts {
   // выбранные элементы в текущей категории
   items: ItemInterface[];
   elementLayouts: LayoutsInterface;
-  handleChange: (
-    checked: boolean,
-    group: GroupLayoutsType,
-    itemId: string
-  ) => void;
+  type: TypeListLayoutsType;
+  onChangeElementLayout: (widget: ItemInterface) => void;
 }
 
 export const ListItemsLayouts: FC<IListItemsLayouts> = ({
   items,
   elementLayouts,
-  handleChange,
+  onChangeElementLayout,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const addElementSelect = (itemId: string) => {
-    // проверка на добавленный элемент
-    const isCheck = !Boolean(items.find((t) => t.i === itemId));
-    handleChange(isCheck, elementLayouts?.group, itemId);
-  };
 
   return (
     <>
@@ -51,7 +42,7 @@ export const ListItemsLayouts: FC<IListItemsLayouts> = ({
                 <IconButton
                   edge="end"
                   aria-label="delete"
-                  onClick={() => addElementSelect(currentElementLayouts.i)}
+                  onClick={() => onChangeElementLayout(currentElementLayouts)}
                 >
                   {items.find((t) => t.i === currentElementLayouts.i) ? (
                     <Delete />
