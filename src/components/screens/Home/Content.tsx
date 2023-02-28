@@ -38,9 +38,9 @@ export const Content: FC = () => {
 
   const onLayoutChange = (
     currentLayout: ReactGridLayout.Layout[],
-    allLayouts: { [P: string]: ItemInterface[] }
+    allLayouts: Layouts
   ) => {
-    setLayouts(allLayouts);
+    setLayouts(allLayouts as { [p: string]: ItemInterface[] });
   };
 
   const onRemoveItem = (itemId: string) => {
@@ -49,21 +49,39 @@ export const Content: FC = () => {
   };
 
   const addElement = (element: ItemInterface) => {
-    // проверка на уже добавленный элемент через find
     const checkElementIsDashboard = items.find(
       (item) => item.i === element.i && item.path === element.path
     );
     if (checkElementIsDashboard) {
-      // console.log(checkElementIsDashboard);
       return onRemoveItem(checkElementIsDashboard.i);
     }
-    // если добавлен, то вызываем удаление
     setItems((prev) => [...prev, element]);
     setAlert(<Alert status={"info"}>{element.i} добавлен на доску!</Alert>);
   };
 
+  // нужно модифицировать наш объект с item, чтобы он содержал актуальные координаты
   const saveLocal = () => {
-    saveToLS<Layouts>("layouts", { lg: items });
+    // обновляем координаты наших item
+    const uniqueKey = new Set(items.map((l) => l.i));
+    const newItem: ItemInterface[] = [];
+    for (const key of Object.keys(layouts)) {
+      // проходимся по всем элементам
+      for (const lay of layouts[key]) {
+        // проверяем элемент на наличие в сете
+        if (uniqueKey.has(lay.i)) {
+          let findItem = items.find((item) => item.i === lay.i);
+          if (!findItem) break;
+          let copyItem = structuredClone(findItem);
+          copyItem.h = lay.h;
+          copyItem.w = lay.w;
+          copyItem.x = lay.x;
+          copyItem.y = lay.y;
+          uniqueKey.delete(lay.i);
+          newItem.push(copyItem);
+        }
+      }
+    }
+    saveToLS<Layouts>("layouts", { lg: newItem });
   };
 
   const onIsEditDashboard = () => {
@@ -88,9 +106,7 @@ export const Content: FC = () => {
         rowHeight={60}
         maxRows={60}
         width={widthGrid}
-        onLayoutChange={(_, allLayouts) =>
-          onLayoutChange(_, allLayouts as { [P: string]: ItemInterface[] })
-        }
+        onLayoutChange={(_, allLayouts) => onLayoutChange(_, allLayouts)}
         isDraggable={isEdit}
         isResizable={isEdit}
       >
