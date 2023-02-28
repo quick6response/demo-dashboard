@@ -15,17 +15,18 @@ import { Widget } from "./Widget/Widget";
 // доступные элементы для выбора
 const getLayouts = [...initialLayoutsExpandedData];
 
-// развернуть двумерный массив
-// initialLayouts.map((lay) => lay.data).flat(),
 export const Content: FC = () => {
   const { setAlert, alert } = useAlert();
   const size = useWindowSize();
-  const [layouts, setLayouts] = useState<Layouts>({
-    lg: [],
-  });
+  const [layouts, setLayouts] = useState<{ [P: string]: ItemInterface[] }>(
+    getFromLS("layoutSave") || {
+      lg: [],
+    }
+  );
+
   const [availableLayouts] = useState(getLayouts);
   // выбранные
-  const [items, setItems] = useState<ItemInterface[]>([]);
+  const [items, setItems] = useState<ItemInterface[]>(layouts.lg);
   // редактирование элементов
   const [isEdit, setIsEdit] = useState(false);
   const [widthGrid, setWidthGrid] = useState(size.width);
@@ -37,7 +38,7 @@ export const Content: FC = () => {
 
   const onLayoutChange = (
     currentLayout: ReactGridLayout.Layout[],
-    allLayouts: ReactGridLayout.Layouts
+    allLayouts: { [P: string]: ItemInterface[] }
   ) => {
     setLayouts(allLayouts);
   };
@@ -59,7 +60,10 @@ export const Content: FC = () => {
     // если добавлен, то вызываем удаление
     setItems((prev) => [...prev, element]);
     setAlert(<Alert status={"info"}>{element.i} добавлен на доску!</Alert>);
-    // добавляем в массив текущих виджетов переданный виджет с параметрами group, type
+  };
+
+  const saveLocal = () => {
+    saveToLS<Layouts>("layouts", { lg: items });
   };
 
   const onIsEditDashboard = () => {
@@ -74,6 +78,7 @@ export const Content: FC = () => {
         onIsEditDashboard={onIsEditDashboard}
         originalItems={availableLayouts}
         isEdit={isEdit}
+        onLayoutSave={saveLocal}
       />
       <ResponsiveGridLayout
         className="layout"
@@ -83,7 +88,9 @@ export const Content: FC = () => {
         rowHeight={60}
         maxRows={60}
         width={widthGrid}
-        onLayoutChange={(_, allLayouts) => onLayoutChange(_, allLayouts)}
+        onLayoutChange={(_, allLayouts) =>
+          onLayoutChange(_, allLayouts as { [P: string]: ItemInterface[] })
+        }
         isDraggable={isEdit}
         isResizable={isEdit}
       >
@@ -93,8 +100,6 @@ export const Content: FC = () => {
             className="widget"
             data-grid={{
               ...item,
-              // w: item.w,
-              // h: item.h,
               x: 0,
               y: index * 2,
             }}
@@ -113,3 +118,19 @@ export const Content: FC = () => {
     </>
   );
 };
+
+function getFromLS<T>(key: string): T | null {
+  if (global.localStorage) {
+    try {
+      // @ts-ignore
+      return JSON.parse(global?.localStorage?.getItem(key)) || null;
+    } catch (e) {}
+  }
+  return null;
+}
+
+function saveToLS<T>(key: string, value: T) {
+  if (global.localStorage) {
+    global.localStorage.setItem("layoutSave", JSON.stringify(value));
+  }
+}
