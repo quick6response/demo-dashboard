@@ -67,7 +67,6 @@ export const DrawerListItem: FC<IAddList> = ({
     <>
       <Drawer
         className={classes.drawer}
-        key={"DrawerList"}
         variant="persistent"
         anchor="right"
         open={isOpen}
@@ -92,7 +91,7 @@ export const DrawerListItem: FC<IAddList> = ({
           </ListItem>
 
           {originalItems.map((layouts) => (
-            <div style={{ marginLeft: 7 }}>
+            <div style={{ marginLeft: 7 }} key={layouts.type}>
               <ListGroupsItemsLayouts
                 key={layouts.type}
                 items={items.filter((i) => i.type === layouts.type)}
