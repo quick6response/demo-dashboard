@@ -48,10 +48,6 @@ interface ITopBar {
   onLayoutSave?: () => void;
   onIsEditDashboard: () => void;
 
-  // удаляем методы, тьо будем мспользовать только один, чтобы логику описать в контенте
-  // onRemoveItem: (itemId: string) => void;
-  // onAddItem: (group: GroupLayoutsType, itemId: string) => void;
-  // доьаляем метод из контента, который пририсает весь обьект с виджетом
   onChangeElementLayout: (widget: ItemInterface) => void;
   // вкл/выкл редактирование дашборда
 }
