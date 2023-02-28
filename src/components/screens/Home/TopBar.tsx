@@ -80,6 +80,7 @@ export const TopBar: FC<ITopBar> = ({
         </IconButton>
       </Card>
       <DrawerListItem
+        key={"DrawerListItem"}
         items={items}
         originalItems={originalItems}
         isOpen={isEdit}
