@@ -61,27 +61,32 @@ export const Content: FC = () => {
 
   // нужно модифицировать наш объект с item, чтобы он содержал актуальные координаты
   const saveLocal = () => {
-    // обновляем координаты наших item
+    // чтобы предотвратить удвоение операций в цикле
     const uniqueKey = new Set(items.map((l) => l.i));
-    const newItem: ItemInterface[] = [];
+    // складываем готовые айтемы
+    let newItem: { [P: string]: ItemInterface[] } = {};
+    // обновляем координаты наших item
     for (const key of Object.keys(layouts)) {
       // проходимся по всем элементам
+      newItem[key] = [];
       for (const lay of layouts[key]) {
         // проверяем элемент на наличие в сете
         if (uniqueKey.has(lay.i)) {
           let findItem = items.find((item) => item.i === lay.i);
           if (!findItem) break;
           let copyItem = structuredClone(findItem);
+          // обновляем координаты для объекта, лучше не делать через спрет оператор
           copyItem.h = lay.h;
           copyItem.w = lay.w;
           copyItem.x = lay.x;
           copyItem.y = lay.y;
           uniqueKey.delete(lay.i);
-          newItem.push(copyItem);
+          newItem[key].push(copyItem);
+          // newItem.push(copyItem);
         }
       }
     }
-    saveToLS<Layouts>("layouts", { lg: newItem });
+    saveToLS<{ [P: string]: ItemInterface[] }>("layouts", newItem);
   };
 
   const onIsEditDashboard = () => {
