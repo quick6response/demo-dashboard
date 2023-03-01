@@ -67,8 +67,9 @@ export const Content: FC = () => {
     let newItem: { [P: string]: ItemInterface[] } = {};
     // обновляем координаты наших item
     for (const key of Object.keys(layouts)) {
+      // проверка на наличие элементов в массиве
+      if (layouts[key].length !== 0) newItem[key] = [];
       // проходимся по всем элементам
-      newItem[key] = [];
       for (const lay of layouts[key]) {
         // проверяем элемент на наличие в сете
         if (uniqueKey.has(lay.i)) {
